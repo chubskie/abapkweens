@@ -1,2 +1,2 @@
-# abapkweens.github.io
-This repository is for the runbooks personally written by ABAP Kweens.
+# ABAP Kweens Runbook Repository
+This archive is for the runbooks personally written by ABAP Kweens.
