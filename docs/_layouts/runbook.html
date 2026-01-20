@@ -1,0 +1,62 @@
+---
+layout: default
+---
+
+<div class="page page--with-sidebar">
+    <aside class="sidebar" role="navigation" aria-label="Runbook navigation">
+        <h3 class="sidebar__title">📘 Runbooks</h3>
+        <ul class="sidebar__list">
+            {%- comment -%}
+            Build a list of pages that:
+            • are real pages (they’ll have a title)
+            • are not the current page
+            Then sort by 'order' (if provided), otherwise 'title'.
+            {%- endcomment -%}
+            {% assign candidates = site.pages | where_exp: "p", "p.title" | where_exp: "p", "p.url != page.url" %}
+
+            {%- comment -%}
+            Normalize the 'order' key: pages without 'order' get a very large number
+            so they appear after explicitly ordered items.
+            {%- endcomment -%}
+            {% assign mapped = "" | split: "" %}
+            {% for p in candidates %}
+            {% assign o = p.order | default: 999999 %}
+            {% assign mapped = mapped | push: p | push: o %}
+            {% endfor %}
+
+            {%- comment -%}
+            Sort first by 'order', then by 'title'.
+            Liquid doesn't support multi-key sort directly, so we
+            sort twice: first by title, then by our synthetic order value (stable-ish).
+            {%- endcomment -%}
+            {% assign pages_by_title = candidates | sort: "title" %}
+            {% assign pages_sorted =
+            pages_by_title
+            | sort_natural: "order" %}
+
+            {%- comment -%}
+            If your Jekyll version doesn’t support sort_natural on absent keys,
+            fallback to a simpler sort pipeline:
+            {% assign pages_sorted = candidates | sort: "title" %}
+            and rely solely on title sorting.
+            {%- endcomment -%}
+
+            {% for p in pages_sorted %}
+            <li class="sidebar__item{% if p.url == page.url %} is-active{% endif %}">
+                {% if p.url == page.url %}
+                <span class="sidebar__link sidebar__link--active">{{ p.title }}</span>
+                {% else %}
+                <a class="sidebar__link" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <main class="content-area">
+        <article class="post-content">
+            <h1 class="post-title">{{ page.title }}</h1>
+            {{ content }}
+        </article>
+    </main>
+</div>
