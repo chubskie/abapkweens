@@ -1,3 +1,8 @@
+---
+title: BAS-BTP Activation Guide
+layout: runbook
+---
+
 # BAS-BTP Activation Guide
 
 ## 1st Link (Citrix)

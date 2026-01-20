@@ -1,0 +1,61 @@
+
+---
+# This front matter tells Jekyll to process this file with Sass.
+---
+
+/* 1) Pull in Minima’s styles first */
+@import "minima";
+
+/* 2) Your overrides/additions for the sidebar layout */
+.page--with-sidebar {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;       /* stick while scrolling */
+  top: 1rem;              /* spacing under the site header */
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+
+  padding: 1rem;
+  border-right: 1px solid #e5e5e5;
+  background: #f8f8f8;
+}
+
+.sidebar__title {
+  margin: 0 0 .75rem 0;
+  font-size: 1.05rem;
+}
+
+.sidebar__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar__item { margin: .25rem 0; }
+
+.sidebar__link {
+  color: #333;
+  text-decoration: none;
+}
+
+.sidebar__link:hover { text-decoration: underline; }
+
+/* Active page styling */
+.sidebar__link--active,
+.sidebar__item.is-active > .sidebar__link {
+  font-weight: 600;
+  cursor: default;
+  text-decoration: none;
+}
+
+/* Content column */
+.content-area {
+  min-width: 0; /* prevents overflow with long code blocks */
+  max-width: 900px;
+}
